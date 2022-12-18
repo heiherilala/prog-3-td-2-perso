@@ -8,12 +8,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sponsor")
+@Table(name = "player")
 @Builder
-public class sponsor {
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false, length = 150)
     private String name;
+    @Column(nullable = false)
+    private int number;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private Team team;
 }
