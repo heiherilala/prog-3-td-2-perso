@@ -3,6 +3,7 @@ package com.HEI.prog3td2.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "player")
 @Builder
+@Data
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,6 @@ public class Player {
     @Column(nullable = false)
     private int number;
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 }
