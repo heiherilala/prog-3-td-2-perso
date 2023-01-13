@@ -1,0 +1,177 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/fenohasinalala/PROG3_TD2/1.0.0
+info:
+  version: "latest"
+  title: PROG3 - TD2 - STD21108
+paths:
+  /matchs:
+    get:
+      tags:
+        - Matchs
+      summary: get all Matchs
+      operationId: getMatchs
+      parameters:
+        - name: page
+          required: true
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          required: true
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          description: List of Matchs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+        '500':
+          description: Internal server error
+        '400':
+          description: Bad request
+        '404':
+          description: Ressource not found
+  
+components:
+  schemas:
+    Match:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        datetime:
+          type: string
+          format: date-time
+        team1:
+          type: array
+          items:
+              $ref: '#/components/schemas/Team'
+        team2:
+          type: array
+          items:
+              $ref: '#/components/schemas/Team'
+        ScoreTeam1:
+          allOf:
+            - $ref: '#/components/schemas/ScoreTeam'
+        ScoreTeam2:
+          allOf:
+            - $ref: '#/components/schemas/ScoreTeam'
+    Team:
+        type: object
+        properties:
+          players:
+            type: array
+            items:
+              $ref: '#/components/schemas/Player'
+          sponsors:
+            type: array
+            items:
+              $ref: '#/components/schemas/Sponsor'
+        allOf:
+          - $ref: '#/components/schemas/UpdateTeam'
+    UpdateTeam:
+        allOf:
+          - $ref: '#/components/schemas/CreateTeam'
+        properties:
+          id:
+            type: number
+            example: 1
+    CreateTeam:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Team name"
+
+    Player:
+        type: object
+        properties:
+          id:
+            type: number
+            example: 1
+          name:
+            type: string
+            example: "Player name"
+          isGarian:
+            type: boolean
+            example: false
+    UpdatePlayer:
+        allOf:
+          - $ref: '#/components/schemas/CreatePlayer'
+        properties:
+          id:
+            type: number
+            example: 2
+    CreatePlayer:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Adriano"
+          team:
+            allOf:
+              - $ref: '#/components/schemas/UpdateTeam'
+    Sponsor:
+      type: object
+      allOf:
+          - $ref: '#/components/schemas/UpdateSponsor'
+    UpdateSponsor:
+        allOf:
+          - $ref: '#/components/schemas/CreateSponsor'
+        properties:
+          id:
+            type: number
+            example: 1
+    CreateSponsor:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Sponsor name"
+    Score:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        minute:
+          type: number
+          example: 35
+        isOwnGoal: 
+          type: boolean
+          example: false
+        players:
+          allOf:
+            - $ref: '#/components/schemas/Player'
+    ScoreTeam:
+      type: object
+      properties:
+        idTeam:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: "Player name"
+        point:
+          type: number
+          example: 1
+        goal:
+          type: array
+          items:
+            $ref: '#/components/schemas/Score'
+
+    Page:
+      type: integer
+      description: Start at `1`
+    PageSize:
+      type: integer
+      description: Cannot exceed `200`
