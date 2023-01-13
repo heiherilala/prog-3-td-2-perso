@@ -59,12 +59,15 @@ components:
           type: array
           items:
               $ref: '#/components/schemas/Team'
-        ScoreTeam1:
-          allOf:
-            - $ref: '#/components/schemas/ScoreTeam'
-        ScoreTeam2:
-          allOf:
-            - $ref: '#/components/schemas/ScoreTeam'
+        Score:
+          type: object
+          properties:
+            scoreTeam1:
+              allOf:
+                - $ref: '#/components/schemas/ScoreTeam'
+            scoreTeam2:
+              allOf:
+                - $ref: '#/components/schemas/ScoreTeam'
     Team:
         type: object
         properties:
@@ -117,6 +120,9 @@ components:
           name:
             type: string
             example: "Adriano"
+          isGarian:
+            type: boolean
+            example: false
           team:
             allOf:
               - $ref: '#/components/schemas/UpdateTeam'
@@ -149,7 +155,7 @@ components:
         isOwnGoal: 
           type: boolean
           example: false
-        players:
+        playerId:
           allOf:
             - $ref: '#/components/schemas/Player'
     ScoreTeam:
@@ -164,7 +170,7 @@ components:
         point:
           type: number
           example: 1
-        goal:
+        goals:
           type: array
           items:
             $ref: '#/components/schemas/Score'
