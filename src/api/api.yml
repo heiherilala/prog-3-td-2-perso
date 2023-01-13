@@ -155,7 +155,7 @@ components:
         isOwnGoal: 
           type: boolean
           example: false
-        playerId:
+        player:
           allOf:
             - $ref: '#/components/schemas/Player'
     ScoreTeam:
